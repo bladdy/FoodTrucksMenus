@@ -1,30 +1,28 @@
 ﻿@model FoodTrucksMenus.Data.Entities.Category
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Editar";
 }
 
-<h4>Crear Categoria</h4>
+<h4>Editar Categoria</h4>
 <hr />
 <div class="row">
     <div class="col-md-8">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="NameCat" class="control-label"></label>
                 <input asp-for="NameCat" class="form-control" />
                 <span asp-validation-for="NameCat" class="text-danger"></span>
             </div>
+            
             <div class="form-group mt-2">
-                <input type="submit" value="Crear" class="btn btn-primary" />
+                <input type="submit" value="Editar" class="btn btn-primary" />
                 <a asp-action="Index" class="btn btn-warning">Volver a la lista</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    
 </div>
 
 @section Scripts {
