@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FoodTrucksMenus.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoodTrucksMenus.Data
 {
@@ -6,7 +7,12 @@ namespace FoodTrucksMenus.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-
+        }
+        public DbSet<Category> Categories { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Category>().HasIndex(c => c.NameCat).IsUnique();
         }
     }
 }
