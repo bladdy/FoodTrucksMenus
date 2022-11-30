@@ -15,7 +15,6 @@ namespace FoodTrucksMenus.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Categories
-                .Include(c => c.TruckCategories)
                 .ToListAsync());
         }
         public IActionResult Create()

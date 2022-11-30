@@ -24,10 +24,15 @@ namespace FoodTrucksMenus.Data.Entities
         public string? Description { get; set; }
         public DateTime? DateCreated { get; set; }
 
-        public Guid? ImagenProduct { get; set; }
 
+        [Display(Name = "Foto")]
+        public Guid? ImagenProduct { get; set; }
+        
+
+        //TODO: Pending to put the correct paths
+        [Display(Name = "Foto")]
         public string ImageFullPath => ImagenProduct == Guid.Empty
-            ? $"https://localhost:7059/Img/noimage.png"
-            : $"https://shoppingprep.blob.core.windows.net/Trucks/{ImagenProduct}";
+            ? $"https://localhost:7240/Img/noimage.png"
+            : $"https://localhost:7240/Platform/{ImagenProduct}";
     }
 }

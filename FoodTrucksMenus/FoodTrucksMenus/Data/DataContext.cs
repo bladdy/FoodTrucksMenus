@@ -9,10 +9,12 @@ namespace FoodTrucksMenus.Data
         {
         }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Platform> Platforms { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Category>().HasIndex(c => c.NameCat).IsUnique();
+            modelBuilder.Entity<Platform>().HasIndex(c => c.Name).IsUnique();
         }
     }
 }

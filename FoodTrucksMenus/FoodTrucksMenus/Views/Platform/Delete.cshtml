@@ -1,0 +1,32 @@
+﻿@model FoodTrucksMenus.Data.Entities.Platform
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Borrar plataforma</h1>
+
+<h3>Estas seguro de borar esta plataforma?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.IconLogo)
+        </dt>
+        <dd class="col-sm-8">
+            <img src="@Model.ImageFullPath" style="width:160px;" />
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Borrar" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-warning">Volver a la lista</a>
+    </form>
+</div>
