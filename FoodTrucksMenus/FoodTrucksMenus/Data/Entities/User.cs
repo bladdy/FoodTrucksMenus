@@ -5,6 +5,7 @@ namespace FoodTrucksMenus.Data.Entities
 {
     public class User
     {
+        public int Id { get; set; }
         [Display(Name = "Documento")]
         [MaxLength(20, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
@@ -38,9 +39,9 @@ namespace FoodTrucksMenus.Data.Entities
         [Display(Name = "Tipo de usuario")]
         public UserType UserType { get; set; }
 
-        [Display(Name = "Ciudad")]
+        /*[Display(Name = "Ciudad")]
         public City City { get; set; }
-
+        */
         [Display(Name = "Usuario")]
         public string FullName => $"{FirstName} {LastName}";
 
