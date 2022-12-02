@@ -1,0 +1,29 @@
+﻿@model FoodTrucksMenus.Models.AddOrEditMenu
+
+@{
+    ViewData["Title"] = "Crear";
+}
+
+<h2>Crear Menu</h2>
+<div class="text-success">
+    <p>
+        @ViewBag.Message
+    </p>
+</div>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Branches" />
+            <input type="hidden" asp-for="Categories" />
+            <partial name="_AddOrEditMenu" />
+            
+            <div class="form-group mt-2">
+                <input type="submit" value="Registrar" class="btn btn-outline-primary" />
+            </div>
+        </form>
+    </div>
+</div>

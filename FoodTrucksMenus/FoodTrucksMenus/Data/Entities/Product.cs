@@ -12,6 +12,7 @@ namespace FoodTrucksMenus.Data.Entities
         public Menu? Menu { get; set; }
         public Category? Category { get; set; }
         public bool Status { get; set; }
+        public bool InOfert { get; set; }
 
         [Column(TypeName = "money")]
         public decimal PurchasePrice { get; set; }
@@ -33,6 +34,6 @@ namespace FoodTrucksMenus.Data.Entities
         [Display(Name = "Foto")]
         public string ImageFullPath => ImagenProduct == Guid.Empty
             ? $"https://localhost:7240/Img/noimage.png"
-            : $"https://localhost:7240/Platform/{ImagenProduct}";
+            : $"https://localhost:7240/Product/{ImagenProduct}";
     }
 }

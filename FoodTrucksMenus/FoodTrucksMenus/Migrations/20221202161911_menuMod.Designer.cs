@@ -4,6 +4,7 @@ using FoodTrucksMenus.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodTrucksMenus.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221202161911_menuMod")]
+    partial class menuMod
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,7 +56,7 @@ namespace FoodTrucksMenus.Migrations
                     b.Property<int>("TablesNumbers")
                         .HasColumnType("int");
 
-                    b.Property<int>("TruckId")
+                    b.Property<int?>("TruckId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -63,10 +65,7 @@ namespace FoodTrucksMenus.Migrations
 
                     b.HasIndex("TruckId");
 
-                    b.HasIndex("NameBranch", "TruckId")
-                        .IsUnique();
-
-                    b.ToTable("Branches");
+                    b.ToTable("Branch");
                 });
 
             modelBuilder.Entity("FoodTrucksMenus.Data.Entities.Category", b =>
@@ -155,9 +154,7 @@ namespace FoodTrucksMenus.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -165,9 +162,9 @@ namespace FoodTrucksMenus.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("Name", "BranchId", "CategoryId")
+                    b.HasIndex("Name", "BranchId")
                         .IsUnique()
-                        .HasFilter("[BranchId] IS NOT NULL AND [CategoryId] IS NOT NULL");
+                        .HasFilter("[Name] IS NOT NULL AND [BranchId] IS NOT NULL");
 
                     b.ToTable("Menus");
                 });
@@ -410,18 +407,14 @@ namespace FoodTrucksMenus.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nametruck")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("Whatsapp")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Nametruck")
-                        .IsUnique()
-                        .HasFilter("[Nametruck] IS NOT NULL");
-
-                    b.ToTable("Trucks");
+                    b.ToTable("Truck");
                 });
 
             modelBuilder.Entity("FoodTrucksMenus.Data.Entities.TruckCategory", b =>
@@ -545,15 +538,11 @@ namespace FoodTrucksMenus.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FoodTrucksMenus.Data.Entities.Truck", "Truck")
+                    b.HasOne("FoodTrucksMenus.Data.Entities.Truck", null)
                         .WithMany("Branch")
-                        .HasForeignKey("TruckId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TruckId");
 
                     b.Navigation("City");
-
-                    b.Navigation("Truck");
                 });
 
             modelBuilder.Entity("FoodTrucksMenus.Data.Entities.City", b =>

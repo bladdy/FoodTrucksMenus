@@ -1,4 +1,5 @@
 using FoodTrucksMenus.Data;
+using FoodTrucksMenus.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ builder.Services.AddDbContext<DataContext>
     (o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+builder.Services.AddScoped<ICombosHelper, CombosHelper>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
