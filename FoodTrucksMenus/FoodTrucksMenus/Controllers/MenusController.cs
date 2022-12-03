@@ -20,13 +20,13 @@ namespace FoodTrucksMenus.Controllers
         public async Task<IActionResult> Index()
         {
             return _context.Menus != null ?
-                        View(await _context.Menus.Include(P => P.Products)
+                        View(await _context.Menus.Include(P => P.MenuProducts)
                         .Include(B => B.Branch).Include(B => B.Category).ToListAsync()) :
                         Problem("Entity set 'DataContext.Menus'  is null.");
         }
         public async Task<IActionResult> Create()
         {
-            AddOrEditMenu model = new AddOrEditMenu
+            AddOrEditMenu model = new()
             {
                 Categories = await _combosHelper.GetComboCategoriesAsync(),
                 Branches = await _combosHelper.GetComboBranchesAsync(1)//Se obotendra el listado enviando el truck id
@@ -40,7 +40,7 @@ namespace FoodTrucksMenus.Controllers
             {
                 try
                 {
-                    Menu menu = new Menu() 
+                    Menu menu = new() 
                     {
                         Name = model.Name,
                         Branch = await _context.Branches.FindAsync(model.BranchId),
@@ -83,20 +83,29 @@ namespace FoodTrucksMenus.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Menus
+            var menu = await _context.Menus
                 .FirstOrDefaultAsync(c => c.Id == id);
-            if (category == null)
+            if (menu == null)
             {
                 return NotFound();
             }
-            return View(category);
+
+            AddOrEditMenu model = new()
+            {
+                Name = menu.Name,
+                Branches = await _combosHelper.GetComboBranchesAsync(1),
+                Categories = await _combosHelper.GetComboCategoriesAsync(),
+                Enable = (bool)menu.Enable,
+                Id = menu.Id,
+            };
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Category category)
+        public async Task<IActionResult> Edit(int id, AddOrEditMenu model)
         {
-            if (id != category.Id)
+            if (id != model.Id)
             {
                 return NotFound();
             }
@@ -105,7 +114,15 @@ namespace FoodTrucksMenus.Controllers
             {
                 try
                 {
-                    _context.Update(category);
+                    Menu menu = new()
+                    {
+                        Name = model.Name,
+                        Branch = await _context.Branches.FindAsync(model.BranchId),
+                        Category = await _context.Categories.FindAsync(model.CategoryId),
+                        Enable = model.Enable,
+                        Id =model.Id,
+                    };
+                    _context.Update(menu);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
@@ -113,7 +130,7 @@ namespace FoodTrucksMenus.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe un pais con el mismo nombre");
+                        ModelState.AddModelError(string.Empty, "Ya existe un Menu con el mismo nombre");
 
                     }
                     else
@@ -127,7 +144,27 @@ namespace FoodTrucksMenus.Controllers
                     ModelState.AddModelError(string.Empty, exception.Message);
                 }
             }
-            return View(category);
+            return View(model);
+        }
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Menu menu = await _context.Menus
+                .Include(MP => MP.MenuProducts)
+                .ThenInclude(P => P.Product)
+                .Include(B => B.Branch)
+                .Include(B => B.Category)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (menu == null)
+            {
+                return NotFound();
+            }
+
+            return View(menu);
         }
 
     }

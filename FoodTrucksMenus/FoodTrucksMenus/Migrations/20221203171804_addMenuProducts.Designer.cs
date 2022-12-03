@@ -4,6 +4,7 @@ using FoodTrucksMenus.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodTrucksMenus.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221203171804_addMenuProducts")]
+    partial class addMenuProducts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -310,6 +312,9 @@ namespace FoodTrucksMenus.Migrations
                     b.Property<bool>("InOfert")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("MenuId")
+                        .HasColumnType("int");
+
                     b.Property<string>("NameProd")
                         .HasColumnType("nvarchar(max)");
 
@@ -325,6 +330,8 @@ namespace FoodTrucksMenus.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("MenuId");
 
                     b.ToTable("Product");
                 });
@@ -655,7 +662,13 @@ namespace FoodTrucksMenus.Migrations
                         .WithMany()
                         .HasForeignKey("CategoryId");
 
+                    b.HasOne("FoodTrucksMenus.Data.Entities.Menu", "Menu")
+                        .WithMany()
+                        .HasForeignKey("MenuId");
+
                     b.Navigation("Category");
+
+                    b.Navigation("Menu");
                 });
 
             modelBuilder.Entity("FoodTrucksMenus.Data.Entities.State", b =>

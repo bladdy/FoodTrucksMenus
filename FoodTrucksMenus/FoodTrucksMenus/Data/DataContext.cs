@@ -16,6 +16,7 @@ namespace FoodTrucksMenus.Data
         public DbSet<Platform> Platforms { get; set; }
         public DbSet<Truck> Trucks { get; set; }
         public DbSet<State> States { get; set; }
+        public DbSet<MenuProducts> MenuProducts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -27,6 +28,7 @@ namespace FoodTrucksMenus.Data
             modelBuilder.Entity<Platform>().HasIndex(p => p.Name).IsUnique();
             modelBuilder.Entity<Truck>().HasIndex(p => p.Nametruck).IsUnique();
             modelBuilder.Entity<State>().HasIndex("Name", "CountryId").IsUnique();
+            modelBuilder.Entity<MenuProducts>().HasIndex("MenuId", "ProductId").IsUnique();
         }
     }
 }

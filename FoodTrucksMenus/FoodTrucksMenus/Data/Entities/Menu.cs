@@ -11,10 +11,10 @@ namespace FoodTrucksMenus.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string? Name { get; set; }
         public Category? Category { get; set; }
-        public ICollection<Product>? Products { get; set; }
+        public ICollection<MenuProducts>? MenuProducts { get; set; }
 
         [Display(Name = "# de Productos")]
-        public int CantProduct => Products == null ? 0 : Products.Count(p=>p.Category.Id == Category.Id);
+        public int CantProduct => MenuProducts == null ? 0 : MenuProducts.Count(p=>p.Id == Id);
         public Branch? Branch { get; set; }
         [Display(Name = "Disponible")]
         public bool? Enable { get; set; }

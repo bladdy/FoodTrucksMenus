@@ -11,3 +11,12 @@ dotnet_diagnostic.CS8601.severity = silent
 
 # CS8604: Posible argumento de referencia nulo
 dotnet_diagnostic.CS8604.severity = silent
+
+# CS8629: Un tipo que acepta valores NULL puede ser nulo.
+dotnet_diagnostic.CS8629.severity = silent
+
+# CS8600: Se va a convertir un literal nulo o un posible valor nulo en un tipo que no acepta valores NULL
+dotnet_diagnostic.CS8600.severity = silent
+
+# CS8620: El argumento no se puede usar para el parámetro debido a las diferencias en la nulabilidad de los tipos de referencia.
+dotnet_diagnostic.CS8620.severity = silent

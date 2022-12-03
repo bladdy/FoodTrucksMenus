@@ -1,0 +1,29 @@
+﻿@model FoodTrucksMenus.Data.Entities.Menu
+
+<hr />
+<dl class="row">
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Name)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Name)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Branch.NameBranch)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Branch.NameBranch)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.CantProduct)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.CantProduct)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Category.NameCat)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Category.NameCat)
+    </dd>
+</dl>

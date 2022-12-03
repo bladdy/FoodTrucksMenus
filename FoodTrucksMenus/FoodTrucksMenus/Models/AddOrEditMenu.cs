@@ -19,7 +19,7 @@ namespace FoodTrucksMenus.Models
         public IEnumerable<SelectListItem> Categories { get; set; }
         [Display(Name = "Sucursal")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una Sucursal.")]
-        //[Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int BranchId { get; set; }
         public IEnumerable<SelectListItem> Branches { get; set; }
 

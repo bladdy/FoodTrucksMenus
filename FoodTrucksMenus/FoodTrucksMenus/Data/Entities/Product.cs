@@ -7,9 +7,9 @@ namespace FoodTrucksMenus.Data.Entities
     {
         [Key]
         public int Id { get; set; }
+        [Display(Name = "Nombre")]
         public string? NameProd { get; set; }
 
-        public Menu? Menu { get; set; }
         public Category? Category { get; set; }
         public bool Status { get; set; }
         public bool InOfert { get; set; }
@@ -21,7 +21,9 @@ namespace FoodTrucksMenus.Data.Entities
         public decimal PriceSale { get; set; }
 
         [Column(TypeName = "decimal(18,4)")]
+        [Display(Name = "Cantidad")]
         public decimal Cant { get; set; }
+        [Display(Name = "Descripcion")]
         public string? Description { get; set; }
         public DateTime? DateCreated { get; set; }
 
@@ -35,5 +37,6 @@ namespace FoodTrucksMenus.Data.Entities
         public string ImageFullPath => ImagenProduct == Guid.Empty
             ? $"https://localhost:7240/Img/noimage.png"
             : $"https://localhost:7240/Product/{ImagenProduct}";
+        public ICollection<MenuProducts>? MenuProducts { get; set; }
     }
 }
