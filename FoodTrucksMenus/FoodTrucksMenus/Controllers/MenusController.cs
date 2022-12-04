@@ -167,5 +167,67 @@ namespace FoodTrucksMenus.Controllers
             return View(menu);
         }
 
+        //Prod crear view
+        public async Task<IActionResult> AddProduct(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Menu menu = await _context.Menus.FindAsync(id);
+            if (menu == null)
+            {
+                return NotFound();
+            }
+
+            AddMenuProductsViewModel model = new()
+            {
+                MenuId = menu.Id,
+                Products = await _context.Products.ToListAsync(),
+                //_combosHelper.GetComboProductsAsync(),
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddDoctor(AddMenuProductsViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Menu menu = await _context.Menus.FindAsync(model.MenuId);
+                MenuProducts menuProducts = new()
+                {
+                    Product = await _context.Products.FindAsync(model.ProductId),
+                    Menu = menu,
+                };
+
+                try
+                {
+                    _context.Add(menuProducts);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Details), new { Id = menu.Id });
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe un Doctor con el mismo nombre en este Hospital.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+            }
+            //model.Products = await _combosHelper.GetComboProductsAsync();
+            return View(model);
+        }
+
     }
 }

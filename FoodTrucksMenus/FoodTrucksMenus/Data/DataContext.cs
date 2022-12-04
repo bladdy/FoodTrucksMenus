@@ -17,6 +17,7 @@ namespace FoodTrucksMenus.Data
         public DbSet<Truck> Trucks { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<MenuProducts> MenuProducts { get; set; }
+        public DbSet<Product> Products { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
