@@ -29,6 +29,7 @@ namespace FoodTrucksMenus.Data
             modelBuilder.Entity<Platform>().HasIndex(p => p.Name).IsUnique();
             modelBuilder.Entity<Truck>().HasIndex(p => p.Nametruck).IsUnique();
             modelBuilder.Entity<State>().HasIndex("Name", "CountryId").IsUnique();
+
             modelBuilder.Entity<MenuProducts>().HasIndex("MenuId", "ProductId").IsUnique();
         }
     }

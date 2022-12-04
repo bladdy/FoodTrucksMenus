@@ -1,0 +1,37 @@
+﻿@model FoodTrucksMenus.Models.AddMenuProductsViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crear</h1>
+
+<h4>Menu / Producto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+
+        <form asp-action="AddProduct" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MenuId" />
+            <input type="hidden" asp-for="Products" />
+            <div class="form-group">
+                <label asp-for="ProductId" class="control-label"></label>
+                <select asp-for="ProductId" asp-items="Model.Products" class="form-control"></select>
+                <span asp-validation-for="ProductId" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <input type="submit" value="Agregar" class="btn btn-outline-primary" />
+                <a asp-action="Details" asp-route-id="@Model.MenuId" class="btn btn-outline-success">Regresar</a>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}
+

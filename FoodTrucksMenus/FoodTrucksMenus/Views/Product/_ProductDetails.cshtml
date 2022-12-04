@@ -1,0 +1,49 @@
+﻿
+@model FoodTrucksMenus.Data.Entities.Product
+
+<h4>Producto</h4>
+<hr />
+<dl class="row">
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.NameProd)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.NameProd)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Description)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Description)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.PriceSale)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.PriceSale)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Cant)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Cant)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.MenuNmber)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.MenuNmber)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Category.NameCat)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Category.NameCat)
+    </dd>
+    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.ImageFullPath)
+    </dt>
+    <dd class = "col-sm-10">
+        <img src="@Model.ImageFullPath" style="width:100px;" />
+    </dd>
+</dl>

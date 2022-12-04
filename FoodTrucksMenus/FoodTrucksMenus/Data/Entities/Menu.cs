@@ -14,7 +14,7 @@ namespace FoodTrucksMenus.Data.Entities
         public ICollection<MenuProducts>? MenuProducts { get; set; }
 
         [Display(Name = "# de Productos")]
-        public int CantProduct => MenuProducts == null ? 0 : MenuProducts.Count(p=>p.Id == Id);
+        public int CantProduct => MenuProducts == null ? 0 : MenuProducts.Count(p=>p.Menu.Id == Id);
         public Branch? Branch { get; set; }
         [Display(Name = "Disponible")]
         public bool? Enable { get; set; }

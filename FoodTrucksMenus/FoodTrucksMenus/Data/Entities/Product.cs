@@ -29,14 +29,14 @@ namespace FoodTrucksMenus.Data.Entities
 
 
         [Display(Name = "Foto")]
-        public Guid? ImagenProduct { get; set; }
+        public string? ImagenProduct { get; set; }
         
-
-        //TODO: Pending to put the correct paths
         [Display(Name = "Foto")]
-        public string ImageFullPath => ImagenProduct == Guid.Empty
+        public string ImageFullPath => string.IsNullOrEmpty(ImagenProduct)
             ? $"https://localhost:7240/Img/noimage.png"
             : $"https://localhost:7240/Product/{ImagenProduct}";
         public ICollection<MenuProducts>? MenuProducts { get; set; }
+        [Display(Name = "Menu")]
+        public int MenuNmber => MenuProducts == null ? 0 : MenuProducts.Count;
     }
 }

@@ -11,7 +11,7 @@ namespace FoodTrucksMenus.Controllers
     {
         private readonly DataContext _context;
         private readonly ICombosHelper _combosHelper;
-
+        public int _MeunID { get; set; }
         public MenusController(DataContext context, ICombosHelper combosHelper)
         {
             _context = context;
@@ -40,7 +40,7 @@ namespace FoodTrucksMenus.Controllers
             {
                 try
                 {
-                    Menu menu = new() 
+                    Menu menu = new()
                     {
                         Name = model.Name,
                         Branch = await _context.Branches.FindAsync(model.BranchId),
@@ -120,7 +120,7 @@ namespace FoodTrucksMenus.Controllers
                         Branch = await _context.Branches.FindAsync(model.BranchId),
                         Category = await _context.Categories.FindAsync(model.CategoryId),
                         Enable = model.Enable,
-                        Id =model.Id,
+                        Id = model.Id,
                     };
                     _context.Update(menu);
                     await _context.SaveChangesAsync();
@@ -175,57 +175,60 @@ namespace FoodTrucksMenus.Controllers
                 return NotFound();
             }
 
-            Menu menu = await _context.Menus.FindAsync(id);
+            Menu menu = await _context.Menus
+                .Include(MP => MP.MenuProducts)
+                .ThenInclude(P => P.Product)
+                .Include(B => B.Branch)
+                .Include(B => B.Category)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (menu == null)
             {
                 return NotFound();
             }
-
+            List<Product> filter = menu.MenuProducts.Select(pc => new Product
+            {
+                Id = pc.Product.Id,
+                NameProd = pc.Product.NameProd
+            }).ToList();
             AddMenuProductsViewModel model = new()
             {
                 MenuId = menu.Id,
-                Products = await _context.Products.ToListAsync(),
-                //_combosHelper.GetComboProductsAsync(),
+                Products = await _combosHelper.GetComboProductsAsync(filter, menu.Category.Id),
             };
 
             return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddDoctor(AddMenuProductsViewModel model)
+        public async Task<IActionResult> AddProduct(AddMenuProductsViewModel model)
         {
+            Menu menu = await _context.Menus.Include(m => m.Category).FirstOrDefaultAsync(m => m.Id == model.MenuId);
             if (ModelState.IsValid)
             {
-                Menu menu = await _context.Menus.FindAsync(model.MenuId);
                 MenuProducts menuProducts = new()
                 {
                     Product = await _context.Products.FindAsync(model.ProductId),
                     Menu = menu,
                 };
-
                 try
                 {
                     _context.Add(menuProducts);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Details), new { Id = menu.Id });
+                    return RedirectToAction(nameof(AddProduct), new { Id = menu.Id });
                 }
-                catch (DbUpdateException dbUpdateException)
-                {
-                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
-                    {
-                        ModelState.AddModelError(string.Empty, "Ya existe un Doctor con el mismo nombre en este Hospital.");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
-                    }
-                }
+
                 catch (Exception exception)
                 {
                     ModelState.AddModelError(string.Empty, exception.Message);
                 }
             }
-            //model.Products = await _combosHelper.GetComboProductsAsync();
+            List<Product> filter = menu.MenuProducts.Select(pc => new Product
+            {
+                Id = pc.Product.Id,
+                NameProd = pc.Product.NameProd
+            }).ToList();
+            model.Products = await _combosHelper.GetComboProductsAsync(filter, menu.Category.Id);
             return View(model);
         }
 

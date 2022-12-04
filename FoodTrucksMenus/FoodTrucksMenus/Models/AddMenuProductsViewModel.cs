@@ -12,7 +12,7 @@ namespace FoodTrucksMenus.Models
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int ProductId { get; set; }
 
-        public IList<Product> Products { get; set; }
+        public IEnumerable<SelectListItem> Products { get; set; }
         //public IEnumerable<SelectListItem> Products { get; set; }
     }
 }

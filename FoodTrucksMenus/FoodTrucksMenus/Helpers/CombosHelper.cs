@@ -54,5 +54,33 @@ namespace FoodTrucksMenus.Helpers
 
             return list;
         }
+
+        public async Task<IEnumerable<SelectListItem>> GetComboProductsAsync(List<Product> filter, int MenuID)
+        {
+            List<Product> products = await _context.Products.Where(p => p.Category.Id == MenuID).ToListAsync();
+            List<Product> productFilterd = new();
+            foreach (Product product in products)
+            {
+                if(!filter.Any(c=>c.Id == product.Id))
+                {
+                    productFilterd.Add(product);
+                }
+            }
+            List<SelectListItem> list = productFilterd.Select(c => new SelectListItem
+            {
+                Text = c.NameProd,
+                Value = $"{c.Id}"
+
+            })
+                .OrderBy(c => c.Text)
+                .ToList();
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione un Producto...]",
+                Value = "0"
+            });
+
+            return list;
+        }
     }
 }
