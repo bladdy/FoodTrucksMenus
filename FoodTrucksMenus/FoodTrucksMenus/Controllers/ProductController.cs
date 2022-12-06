@@ -1,6 +1,7 @@
 ﻿using FoodTrucksMenus.Data;
 using FoodTrucksMenus.Data.Entities;
 using FoodTrucksMenus.Helpers;
+using FoodTrucksMenus.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,6 +43,16 @@ namespace FoodTrucksMenus.Controllers
             }
 
             return View(product);
+        }
+        public async Task<IActionResult> Create()
+        {
+            CreateProductViewModel model = new()
+            {
+                Categories = await _combosHelper.GetComboCategoriesAsync(),
+                Menus = await _combosHelper.GetComboMenuAsync(0),
+            };
+
+            return View(model);
         }
     }
 }

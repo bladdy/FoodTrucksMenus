@@ -55,6 +55,27 @@ namespace FoodTrucksMenus.Helpers
             return list;
         }
 
+        public async Task<IEnumerable<SelectListItem>> GetComboMenuAsync(int categoryId)
+        {
+            List<SelectListItem> list = await _context.Menus
+               .Where(x => x.Category.Id == categoryId)
+               .Select(x => new SelectListItem
+               {
+                   Text = x.Name,
+                   Value = $"{x.Id}"
+               })
+               .OrderBy(x => x.Text)
+               .ToListAsync();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione un Menu...]",
+                Value = "0"
+            });
+
+            return list;
+        }
+
         public async Task<IEnumerable<SelectListItem>> GetComboProductsAsync(List<Product> filter, int MenuID)
         {
             List<Product> products = await _context.Products.Where(p => p.Category.Id == MenuID).ToListAsync();

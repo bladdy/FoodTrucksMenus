@@ -1,0 +1,67 @@
+﻿@model FoodTrucksMenus.Models.CreateProductViewModel
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Description" class="control-label"></label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CategoryId" class="control-label"></label>
+            <select asp-for="CategoryId" asp-items="Model.Categories" class="form-control"></select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MenuId" class="control-label"></label>
+            <select asp-for="MenuId" asp-items="Model.Menus" class="form-control"></select>
+            <span asp-validation-for="MenuId" class="text-danger"></span>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-check">
+                    <label asp-for="InOfert" class="form-check-label"></label>
+                    <input asp-for="InOfert" type="checkbox" class="form-check-input" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-check">
+                    <label asp-for="Status" class="form-check-label"></label>
+                    <input asp-for="Status" type="checkbox" class="form-check-input" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="Cant" class="control-label"></label>
+            <input asp-for="Cant" class="form-control" />
+            <span asp-validation-for="Cant" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PurchasePrice" class="control-label"></label>
+            <input asp-for="PurchasePrice" class="form-control" />
+            <span asp-validation-for="PurchasePrice" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PriceSale" class="control-label"></label>
+            <input asp-for="PriceSale" class="form-control" />
+            <span asp-validation-for="PriceSale" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ImageFile" class="control-label"></label>
+            <input asp-for="ImageFile" class="form-control" type="file" />
+            <span asp-validation-for="ImageFile" class="text-danger"></span>
+        </div>
+    </div>
+</div>
