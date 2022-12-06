@@ -8,11 +8,10 @@ namespace FoodTrucksMenus.Models
     {
         public int MenuId { get; set; }
         [Display(Name = "Producto")]
-        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una Doctor.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una Producto.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int ProductId { get; set; }
 
         public IEnumerable<SelectListItem> Products { get; set; }
-        //public IEnumerable<SelectListItem> Products { get; set; }
     }
 }

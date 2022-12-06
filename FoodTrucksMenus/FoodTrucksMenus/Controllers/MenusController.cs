@@ -11,7 +11,7 @@ namespace FoodTrucksMenus.Controllers
     {
         private readonly DataContext _context;
         private readonly ICombosHelper _combosHelper;
-        public int _MeunID { get; set; }
+        //ToDo: agregar metodo que quita el producto del menu
         public MenusController(DataContext context, ICombosHelper combosHelper)
         {
             _context = context;

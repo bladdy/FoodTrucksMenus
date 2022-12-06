@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
-<div class="container mt-5">
+<div class="container mt-2">
     <div class="row">
         <div class="col-md-12">
             <div classs="panel panel-default">
@@ -12,7 +12,7 @@
                     <h3>Paises</h3>
 
                     <p>
-                        <a asp-action="Create" class="btn btn-outline-primary">Crear Nuevo</a>
+                        <a asp-action="Create" class="btn btn-outline-secondary">Crear Nuevo</a>
                     </p>
                 </div>
                 <div classs="panel-body">
@@ -39,9 +39,9 @@
                                         @Html.DisplayFor(modelItem => item.StatesNumber)
                                     </td>
                                     <td>
-                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning">Editar</a>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary">Editar</a>
                                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-secondary">Detalles</a>
-                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Borrar</a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-secondary">Borrar</a>
                                     </td>
                                 </tr>
                             }
