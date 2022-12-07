@@ -26,15 +26,25 @@ namespace FoodTrucksMenus.Models
 
         [Display(Name = "Foto")]
         public IFormFile? ImageFile { get; set; }
+        [Display(Name = "Tiempo de Preparación en min")]
+        public decimal PrepTime { get; set; }
+        [Display(Name = "Estado")]
         public bool Status { get; set; }
+        [Display(Name = "En Oferta")]
         public bool InOfert { get; set; }
         [Column(TypeName = "money")]
+        [Display(Name = "Precio de Costo")]
         public decimal PurchasePrice { get; set; }
 
         [Column(TypeName = "money")]
+        [Display(Name = "Precio de Venta")]
         public decimal PriceSale { get; set; }
         [Column(TypeName = "decimal(18,4)")]
         [Display(Name = "Cantidad")]
         public decimal Cant { get; set; }
+        [Column(TypeName = "money")]
+        [Display(Name = "Precio de Oferta")]
+        public decimal PriceOfert { get; set; }
+
     }
 }

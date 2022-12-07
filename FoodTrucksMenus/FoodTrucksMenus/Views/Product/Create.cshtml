@@ -4,9 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Crear</h1>
-
-<h4>Producto</h4>
+<h1>Crear Producto</h1>
 <hr />
 <div class="row">
     <div class="col-md-12">
@@ -15,6 +13,7 @@
             <input type="hidden" asp-for="Categories" />
             <input type="hidden" asp-for="Menus" />
             <partial name="_CreateProduct" />
+            <hr />
             <div class="form-group mt-2">
                 <input type="submit" value="Crear" class="btn btn-outline-secondary" />
                 <a asp-action="Index" class="btn btn-outline-secondary">Regresar</a>

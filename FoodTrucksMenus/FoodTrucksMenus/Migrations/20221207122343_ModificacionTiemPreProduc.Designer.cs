@@ -4,6 +4,7 @@ using FoodTrucksMenus.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodTrucksMenus.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221207122343_ModificacionTiemPreProduc")]
+    partial class ModificacionTiemPreProduc
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -180,10 +182,10 @@ namespace FoodTrucksMenus.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("MenuId")
+                    b.Property<int?>("MenuId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -191,7 +193,8 @@ namespace FoodTrucksMenus.Migrations
                     b.HasIndex("ProductId");
 
                     b.HasIndex("MenuId", "ProductId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[MenuId] IS NOT NULL AND [ProductId] IS NOT NULL");
 
                     b.ToTable("MenuProducts");
                 });
@@ -314,9 +317,6 @@ namespace FoodTrucksMenus.Migrations
 
                     b.Property<int>("PrepTime")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("PriceOfert")
-                        .HasColumnType("money");
 
                     b.Property<decimal>("PriceSale")
                         .HasColumnType("money");
@@ -611,15 +611,11 @@ namespace FoodTrucksMenus.Migrations
                 {
                     b.HasOne("FoodTrucksMenus.Data.Entities.Menu", "Menu")
                         .WithMany("MenuProducts")
-                        .HasForeignKey("MenuId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MenuId");
 
                     b.HasOne("FoodTrucksMenus.Data.Entities.Product", "Product")
                         .WithMany("MenuProducts")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.Navigation("Menu");
 
