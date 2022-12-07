@@ -11,7 +11,6 @@
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Categories" />
-            <input type="hidden" asp-for="Menus" />
             <partial name="_CreateProduct" />
             <hr />
             <div class="form-group mt-2">
@@ -22,8 +21,9 @@
     </div>
 </div>
 
+
+
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+  
+}

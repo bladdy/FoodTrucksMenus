@@ -49,8 +49,7 @@ namespace FoodTrucksMenus.Controllers
         {
             CreateProductViewModel model = new()
             {
-                Categories = await _combosHelper.GetComboCategoriesAsync(),
-                Menus = await _combosHelper.GetComboMenuAsync(5),
+                Categories = await _combosHelper.GetComboCategoriesAsync()
             };
 
             return View(model);
@@ -152,5 +151,6 @@ namespace FoodTrucksMenus.Controllers
             }
 
         }
+
     }
 }
