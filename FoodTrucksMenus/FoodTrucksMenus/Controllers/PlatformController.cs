@@ -10,7 +10,6 @@ namespace FoodTrucksMenus.Controllers
     public class PlatformController : Controller
     {
         private readonly DataContext _context;
-        //ToDo: crear la vista de editar plataforma
         public PlatformController(DataContext context)
         {
             _context = context;
@@ -19,6 +18,72 @@ namespace FoodTrucksMenus.Controllers
         {
             return View(await _context.Platforms
                 .ToListAsync());
+        }
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var platform = await _context.Platforms
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (platform == null)
+            {
+                return NotFound();
+            }
+            AddorEditPlatformViewModel model = new()
+            {
+                //IconLogo = platform.IconLogo,
+                Name = platform.Name
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(int? id, AddorEditPlatformViewModel model)
+        {
+            
+            if (id == null)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Platform platform1;
+                    if (model.IconLogo != null)
+                    {
+                        Uploads(model.IconLogo);
+                        platform1 = new Platform()
+                        {
+                            Id = (int)id,
+                            Name = model.Name,
+                            IconLogo = model.IconLogo.FileName
+                        };
+
+                    }
+                    else
+                    {
+                        platform1 = new Platform()
+                        {
+                            Id = (int)id,
+                            Name = model.Name,
+                        };
+
+                    }
+                    _context.Update(platform1);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                
+            }
+            return View(model);
         }
         public IActionResult Create()
         {
@@ -39,7 +104,6 @@ namespace FoodTrucksMenus.Controllers
                         {
                             Name = model.Name,
                             IconLogo = model.IconLogo.FileName
-
                         };
                     }
                     else
@@ -110,13 +174,13 @@ namespace FoodTrucksMenus.Controllers
                 string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Platform");
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
-                
+
 
                 string fileNameWithPath = Path.Combine(path, files);
 
                 FileInfo fileInfo = new FileInfo(fileNameWithPath);
                 fileInfo.Delete();
-               
+
 
             }
             catch (Exception e)
@@ -142,14 +206,14 @@ namespace FoodTrucksMenus.Controllers
                 {
                     files.CopyTo(stream);
                 }
-                
+
             }
             catch (Exception e)
             {
 
                 ModelState.AddModelError(string.Empty, e.Message);
             }
-            
+
         }
     }
 }
