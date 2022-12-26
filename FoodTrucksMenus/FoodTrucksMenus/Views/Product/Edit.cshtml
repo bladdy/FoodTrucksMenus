@@ -1,0 +1,31 @@
+﻿@model FoodTrucksMenus.Models.CreateProductViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Editar Producto</h1>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Categories" />
+            <partial name="_CreateProduct" />
+            <hr />
+            <div class="form-group mt-2">
+                <input type="submit" value="Editar" class="btn btn-outline-secondary" />
+                <a asp-action="Index" class="btn btn-outline-secondary">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

@@ -74,6 +74,7 @@ namespace FoodTrucksMenus.Controllers
                     PurchasePrice = model.PurchasePrice,
                     PrepTime = Convert.ToInt32(60 * model.PrepTime),
                     Cant = model.Cant,
+                    Status = model.Status,
                     Category = await _context.Categories.FindAsync(model.CategoryId),
                 };
                 if (model.ImageFile != null)
@@ -82,22 +83,6 @@ namespace FoodTrucksMenus.Controllers
                     product.ImagenProduct = model.ImageFile.FileName;
                     Uploads(model.ImageFile);
                 }
-                /*
-                product.ProductCategories = new List<ProductCategory>()
-                {
-                        new ProductCategory
-                        {
-                            Category = await _context.Categories.FindAsync(model.CategoryId)
-                        }
-                };
-                if (imageId != Guid.Empty)
-                {
-                    product.ProductImages = new List<ProductImage>()
-                    {
-                               new ProductImage { ImageId = imageId }
-                    };
-                }*/
-
                 try
                 {
                     _context.Add(product);
@@ -124,7 +109,93 @@ namespace FoodTrucksMenus.Controllers
             model.Categories = await _combosHelper.GetComboCategoriesAsync();
             return View(model);
         }
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var product = await _context.Products
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            CreateProductViewModel model = new()
+            {
+                Categories = await _combosHelper.GetComboCategoriesAsync(),
+                Name = product.NameProd,
+                PriceOfert = product.PriceOfert,
+                PriceSale = product.PriceSale,
+                PrepTime = product.PrepTime,
+                PurchasePrice = product.PurchasePrice,
+                Cant = product.Cant,
+                Status = product.Status,
+                Description = product.Description,
+
+            };
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, CreateProductViewModel model)
+        {
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                Guid imageId = Guid.Empty;
+                if (model.ImageFile != null)
+                {
+                    //imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "products");
+                }
+                Product product = new()
+                {
+                    Description = model.Description,
+                    NameProd = model.Name,
+                    PriceOfert = model.PriceOfert,
+                    PriceSale = model.PriceSale,
+                    PurchasePrice = model.PurchasePrice,
+                    PrepTime = Convert.ToInt32(60 * model.PrepTime),
+                    Cant = model.Cant,
+                    Status = model.Status,
+                    Id = model.Id,
+                    Category = await _context.Categories.FindAsync(model.CategoryId),
+                };
+                if (model.ImageFile != null)
+                {
+
+                    product.ImagenProduct = model.ImageFile.FileName;
+                    Uploads(model.ImageFile);
+                }
+                try
+                {
+                    _context.Update(product);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe un producto con el mismo nombre.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+            }
+            return View(model);
+        }
         private void Uploads(IFormFile files)
         {
             try
