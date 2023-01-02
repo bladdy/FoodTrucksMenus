@@ -11,7 +11,7 @@
                 <div classs="panel-heading">
                     <h3>Menus</h3>
                     <p>
-                        <a asp-action="Create" class="btn btn-outline-primary">Crear Nuevo</a>
+                        <a asp-action="Create" class="btn btn-outline-secondary">Crear Nuevo</a>
                     </p>
                 </div>
                 <div classs="panel-body">
@@ -64,9 +64,9 @@
                                         }
                                     </td>
                                     <td>
-                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning">Editar</a>
-                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-secondary">Detalles</a>
-                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Borrar</a>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary"><i class="bi bi-pencil-square"></i></a>
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-secondary"><i class="bi bi-clipboard-minus"></i></a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-secondary"><i class="bi bi-trash"></i></a>
                                     </td>
                                 </tr>
                             }

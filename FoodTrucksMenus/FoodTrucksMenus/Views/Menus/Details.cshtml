@@ -10,8 +10,8 @@
         <partial name="_MenuDetails" />
     </div>
     <div>
-        <a asp-action="AddProduct" asp-route-id="@Model?.Id" class="btn btn-outline-primary">Adicionar Productos</a>
-        <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
+        <a asp-action="AddProduct" asp-route-id="@Model?.Id" class="btn btn-outline-secondary">Adicionar Productos</a>
+        <a asp-action="Index" class="btn btn-outline-secondary">Regresar</a>
     </div>
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
@@ -20,7 +20,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Doctores</h3>
+                    <h3 class="panel-title">Productos</h3>
                 </div>
                 <div class="panel-body">
                     <table class="table table-hover table-responsive table-striped" id="ImagesTable">
@@ -58,7 +58,7 @@
                                         @Html.DisplayFor(modelItem => item.Product.PriceSale)
                                     </td>
                                     <td>
-                                        <a asp-action="DeleteDoctor" asp-route-id="@item.Id" class="btn btn-outline-danger">Quitar</a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-secondary"><i class="bi bi-trash"></i></a>
                                     </td>
                                 </tr>
                             }
