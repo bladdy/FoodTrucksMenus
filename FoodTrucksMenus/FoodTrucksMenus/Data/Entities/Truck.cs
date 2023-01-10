@@ -8,6 +8,7 @@
         public bool? Whatsapp { get; set; }
         //1 a muchos
         public ICollection<Branch>? Branch { get; set; }
+        public ICollection<Product>? Product { get; set; }
 
         //Muchos a muchos
         public ICollection<TruckPlatform>? TruckPlatforms { get; set; }

@@ -72,6 +72,7 @@ namespace FoodTrucksMenus.Controllers
                     PriceOfert = model.PriceOfert,
                     PriceSale = model.PriceSale,
                     PurchasePrice = model.PurchasePrice,
+                    Truck = await _context.Trucks.FindAsync(1),
                     PrepTime = Convert.ToInt32(60 * model.PrepTime),
                     Cant = model.Cant,
                     Status = model.Status,

@@ -32,8 +32,7 @@ namespace FoodTrucksMenus.Data.Entities
         [Display(Name = "Descripcion")]
         public string? Description { get; set; }
         public DateTime? DateCreated { get; set; }
-        //ToDo: Agregar la branch cuando se cree el controlador usuario
-        //public Branch? Branch { get; set; }
+        public Truck Truck { get; set; }
 
         [Display(Name = "Foto")]
         public string? ImagenProduct { get; set; }
