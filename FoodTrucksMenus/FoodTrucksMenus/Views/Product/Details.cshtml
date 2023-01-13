@@ -31,12 +31,23 @@
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.ImageFullPath)
+                                @Html.DisplayNameFor(model => model.ProductImages.FirstOrDefault().ImageFullPath)
                             </th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach (var item in Model.ProductImages)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="@item.ImageFullPath" style="width:150px;" />
+                                </td>
+                                <td>
+                                    <a asp-action="DeleteImage" asp-route-id="@item.Id" class="btn btn-outline-secondary"><i class="bi bi-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>

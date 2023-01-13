@@ -75,7 +75,6 @@ namespace FoodTrucksMenus.Controllers
             return View(model);
         }
 
-        //ToDo: Pendiente Crear el update MEnu
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)

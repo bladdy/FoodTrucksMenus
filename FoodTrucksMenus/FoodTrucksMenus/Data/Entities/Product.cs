@@ -31,20 +31,23 @@ namespace FoodTrucksMenus.Data.Entities
         public int PrepTime { get; set; }
         [Display(Name = "Descripcion")]
         public string? Description { get; set; }
+        [Display(Name = "Fecha de Creacion")]
         public DateTime? DateCreated { get; set; }
         public Truck Truck { get; set; }
-
-        [Display(Name = "Foto")]
-        public string? ImagenProduct { get; set; }
-        
-        [Display(Name = "Foto")]
-        public string ImageFullPath => string.IsNullOrEmpty(ImagenProduct)
-            ? $"https://localhost:7240/Img/noimage.png"
-            : $"https://localhost:7240/Product/{ImagenProduct}";
         public ICollection<MenuProducts>? MenuProducts { get; set; }
         [Display(Name = "Menu")]
         public int MenuNmber => MenuProducts == null ? 0 : MenuProducts.Count;
         [Display(Name = "Tiempo de Preparación en minutos")]
         public int PrepMins => PrepTime / 60;
+        public ICollection<ProductImage>? ProductImages { get; set; }
+
+        [Display(Name = "Fotos")]
+        public int ImagesNumber => ProductImages == null ? 0 : ProductImages.Count;
+
+        //TODO: Pending to change to the correct path
+        [Display(Name = "Foto")]
+        public string ImageFullPath => ProductImages == null || ProductImages.Count == 0
+            ? $"https://localhost:7240/Img/noimage.png"
+            : ProductImages.FirstOrDefault().ImageFullPath;
     }
 }

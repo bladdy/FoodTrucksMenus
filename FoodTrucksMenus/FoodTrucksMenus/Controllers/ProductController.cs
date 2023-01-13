@@ -22,6 +22,7 @@ namespace FoodTrucksMenus.Controllers
         {
             return View(await _context.Products
                 .Include(pc => pc.Category)
+                .Include(pi => pi.ProductImages)
                 .Include(p => p.MenuProducts)
                 .ThenInclude(p => p.Menu)
                 .ToListAsync());
@@ -35,6 +36,7 @@ namespace FoodTrucksMenus.Controllers
 
             Product product = await _context.Products
                 .Include(p => p.Category)
+                .Include(pi => pi.ProductImages)
                 .Include(pm => pm.MenuProducts)
                 .ThenInclude(pm => pm.Menu)
                 .FirstOrDefaultAsync(p => p.Id == id);
@@ -76,12 +78,16 @@ namespace FoodTrucksMenus.Controllers
                     PrepTime = Convert.ToInt32(60 * model.PrepTime),
                     Cant = model.Cant,
                     Status = model.Status,
+                    DateCreated = DateTime.Now,
                     Category = await _context.Categories.FindAsync(model.CategoryId),
                 };
+                
                 if (model.ImageFile != null)
                 {
-
-                    product.ImagenProduct = model.ImageFile.FileName;
+                    product.ProductImages = new List<ProductImage>()
+                    {
+                               new ProductImage { ImagenProduct = model.ImageFile.FileName }
+                    };
                     Uploads(model.ImageFile);
                 }
                 try
@@ -169,8 +175,10 @@ namespace FoodTrucksMenus.Controllers
                 };
                 if (model.ImageFile != null)
                 {
-
-                    product.ImagenProduct = model.ImageFile.FileName;
+                    product.ProductImages = new List<ProductImage>()
+                    {
+                               new ProductImage { ImagenProduct = model.ImageFile.FileName }
+                    };
                     Uploads(model.ImageFile);
                 }
                 try
@@ -195,6 +203,54 @@ namespace FoodTrucksMenus.Controllers
                     ModelState.AddModelError(string.Empty, exception.Message);
                 }
             }
+            return View(model);
+        }
+        public async Task<IActionResult> AddImage(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Product product = await _context.Products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            AddProductImageViewModel model = new()
+            {
+                ProductId = product.Id,
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddImage(AddProductImageViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Product product = await _context.Products.FindAsync(model.ProductId);
+                ProductImage productImage = new()
+                {
+                    Product = product,
+                    ImagenProduct = model.ImageFile.FileName
+                };
+                Uploads(model.ImageFile);
+                try
+                {
+                    _context.Add(productImage);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Details), new { Id = product.Id });
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+            }
+
             return View(model);
         }
         private void Uploads(IFormFile files)
