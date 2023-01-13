@@ -14,7 +14,6 @@ namespace FoodTrucksMenus.Data.Entities
         //public Guid ImageId { get; set; }
         [Display(Name = "Foto")]
         public string? ImagenProduct { get; set; }
-        //TODO: Pending to change to the correct path
         [Display(Name = "Foto")]
         public string ImageFullPath => string.IsNullOrEmpty(ImagenProduct)
             ? $"https://localhost:7240/Img/noimage.png"

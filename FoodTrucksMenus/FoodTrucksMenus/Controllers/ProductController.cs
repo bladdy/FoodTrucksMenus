@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FoodTrucksMenus.Controllers
 {
-    //ToDo: Crud Producto y asignar al menu de una vez
     public class ProductController : Controller
     {
         private readonly DataContext _context;
@@ -62,11 +61,6 @@ namespace FoodTrucksMenus.Controllers
         {
             if (ModelState.IsValid)
             {
-                Guid imageId = Guid.Empty;
-                if (model.ImageFile != null)
-                {
-                    //imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "products");
-                }
                 Product product = new()
                 {
                     Description = model.Description,
@@ -253,6 +247,33 @@ namespace FoodTrucksMenus.Controllers
 
             return View(model);
         }
+        public async Task<IActionResult> DeleteImage(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            ProductImage productImage = await _context.ProductImages
+                .Include(pi => pi.Product)
+                .FirstOrDefaultAsync(pi => pi.Id == id);
+            if (productImage == null)
+            {
+                return NotFound();
+            }
+
+            //await _blobHelper.DeleteBlobAsync(productImage.ImageId, "products");
+            DeleteImg(productImage.ImageFullPath);
+            _context.ProductImages.Remove(productImage);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Details), new { Id = productImage.Product.Id });
+        }
+
+        private void DeleteImg(string imageFullPath)
+        {
+            throw new NotImplementedException();
+        }
+
         private void Uploads(IFormFile files)
         {
             try
