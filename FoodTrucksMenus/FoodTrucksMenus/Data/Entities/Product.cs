@@ -11,7 +11,7 @@ namespace FoodTrucksMenus.Data.Entities
         public string? NameProd { get; set; }
 
         public Category? Category { get; set; }
-        [Display(Name = "Estado")]
+        [Display(Name = "Activo")]
         public bool Status { get; set; }
         [Display(Name = "En Oferta")]
         public bool InOfert { get; set; }
