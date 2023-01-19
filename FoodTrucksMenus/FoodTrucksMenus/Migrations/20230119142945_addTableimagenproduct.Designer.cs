@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodTrucksMenus.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230113164406_addproductimg")]
-    partial class addproductimg
+    [Migration("20230119142945_addTableimagenproduct")]
+    partial class addTableimagenproduct
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -356,7 +356,7 @@ namespace FoodTrucksMenus.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImage");
+                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("FoodTrucksMenus.Data.Entities.Schedule", b =>

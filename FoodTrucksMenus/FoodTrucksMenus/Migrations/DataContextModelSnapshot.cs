@@ -354,7 +354,7 @@ namespace FoodTrucksMenus.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImage");
+                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("FoodTrucksMenus.Data.Entities.Schedule", b =>

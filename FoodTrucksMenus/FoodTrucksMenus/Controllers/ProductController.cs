@@ -20,8 +20,8 @@ namespace FoodTrucksMenus.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Products
-                .Include(pc => pc.Category)
                 .Include(pi => pi.ProductImages)
+                .Include(pc => pc.Category)
                 .Include(p => p.MenuProducts)
                 .ThenInclude(p => p.Menu)
                 .ToListAsync());
@@ -197,6 +197,7 @@ namespace FoodTrucksMenus.Controllers
                     ModelState.AddModelError(string.Empty, exception.Message);
                 }
             }
+            model.Categories = await _combosHelper.GetComboCategoriesAsync();
             return View(model);
         }
         public async Task<IActionResult> AddImage(int? id)
