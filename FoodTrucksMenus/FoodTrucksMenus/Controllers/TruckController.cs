@@ -28,11 +28,14 @@ namespace FoodTrucksMenus.Controllers
                 .FirstOrDefaultAsync(m => m.Id == 1)) :
                         Problem("Entity set 'DataContext.Trucks' is null.");
         }
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> CreateBranch()
         {
-            CreateProductViewModel model = new()
+            AddOrEditBranchViewModel model = new()
             {
-                Categories = await _combosHelper.GetComboCategoriesAsync()
+                Countries = await _combosHelper.GetComboCountriesAsync(),
+                States = await _combosHelper.GetComboStatesAsync(0),
+                Cities = await _combosHelper.GetComboCitiesAsync(0),
+                Truck = await _context.Trucks.FirstOrDefaultAsync( t => t.Id == 1)
             };
 
             return View(model);
@@ -92,6 +95,32 @@ namespace FoodTrucksMenus.Controllers
 
             model.Categories = await _combosHelper.GetComboCategoriesAsync();
             return View(model);
+        }
+
+        public JsonResult GetStates(int countryId)
+        {
+            Country country = _context.Countries
+                .Include(c => c.States)
+                .FirstOrDefault(c => c.Id == countryId);
+            if (country == null)
+            {
+                return null;
+            }
+
+            return Json(country.States.OrderBy(d => d.Name));
+        }
+
+        public JsonResult GetCities(int stateId)
+        {
+            State state = _context.States
+                .Include(s => s.Cities)
+                .FirstOrDefault(s => s.Id == stateId);
+            if (state == null)
+            {
+                return null;
+            }
+
+            return Json(state.Cities.OrderBy(c => c.Name));
         }
     }
 }
