@@ -11,6 +11,7 @@ namespace FoodTrucksMenus.Data.Entities
         public string Name { get; set; }
         public int UsersNumber { get; set; }
         public int BranchesNumber { get; set; }
+        public int MenusNumber { get; set; }
         public int TablesNumber { get; set; }
         public List<string> Detallis { get; set; }
         [Column(TypeName = "money")]
