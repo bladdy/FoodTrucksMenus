@@ -60,6 +60,7 @@ namespace FoodTrucksMenus.Controllers
         public async Task<IActionResult> Create(CreateProductViewModel model)
         {
             if (ModelState.IsValid)
+
             {
                 Product product = new()
                 {
