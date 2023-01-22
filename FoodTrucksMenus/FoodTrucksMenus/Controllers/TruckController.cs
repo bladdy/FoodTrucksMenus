@@ -21,7 +21,8 @@ namespace FoodTrucksMenus.Controllers
             return _context.Trucks != null ?
                         View(await _context.Trucks
                 .Include(T => T.Branch)
-                .ThenInclude(P => P.Menus)
+                //.ThenInclude(P => P.Menus)
+                //.ThenInclude(c=> c.Category)
                 .Include(B => B.TruckPlatforms)
                 .ThenInclude(B => B.Platform)
                 .Include(B => B.TruckCategories)
@@ -32,47 +33,36 @@ namespace FoodTrucksMenus.Controllers
         {
             AddOrEditBranchViewModel model = new()
             {
+                Id = 0,
                 Countries = await _combosHelper.GetComboCountriesAsync(),
                 States = await _combosHelper.GetComboStatesAsync(0),
                 Cities = await _combosHelper.GetComboCitiesAsync(0),
-                Truck = await _context.Trucks.FirstOrDefaultAsync( t => t.Id == 1)
+                TruckId = 1
             };
 
             return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateProductViewModel model)
+        public async Task<IActionResult> CreateBranch(AddOrEditBranchViewModel model)
         {
             if (ModelState.IsValid)
 
             {
-                Product product = new()
+                Branch branch = new()
                 {
-                    Description = model.Description,
-                    NameProd = model.Name,
-                    PriceOfert = model.PriceOfert,
-                    PriceSale = model.PriceSale,
-                    PurchasePrice = model.PurchasePrice,
-                    Truck = await _context.Trucks.FindAsync(1),
-                    PrepTime = Convert.ToInt32(60 * model.PrepTime),
-                    Cant = model.Cant,
-                    Status = model.Status,
-                    DateCreated = DateTime.Now,
-                    Category = await _context.Categories.FindAsync(model.CategoryId),
+                    NameBranch = model.Name,
+                    Phone = model.Phone,
+                    Address = model.Address,
+                    IsMain = model.IsMain,
+                    TablesNumbers = model.TablesNumbers,
+                    Truck = await _context.Trucks.FindAsync(model.TruckId),
+                    City = await _context.Cities.FindAsync(model.CityId)
                 };
 
-                if (model.ImageFile != null)
-                {
-                    product.ProductImages = new List<ProductImage>()
-                    {
-                               new ProductImage { ImagenProduct = model.ImageFile.FileName }
-                    };
-                    //Uploads(model.ImageFile);
-                }
                 try
                 {
-                    _context.Add(product);
+                    _context.Add(branch);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
@@ -93,11 +83,13 @@ namespace FoodTrucksMenus.Controllers
                 }
             }
 
-            model.Categories = await _combosHelper.GetComboCategoriesAsync();
+            model.Countries = await _combosHelper.GetComboCountriesAsync();
+            model.States = await _combosHelper.GetComboStatesAsync(model.CountryId);
+            model.Cities = await _combosHelper.GetComboCitiesAsync(model.StateId);
             return View(model);
         }
 
-        public JsonResult GetStates(int countryId)
+        public JsonResult? GetStates(int countryId)
         {
             Country country = _context.Countries
                 .Include(c => c.States)
@@ -110,7 +102,7 @@ namespace FoodTrucksMenus.Controllers
             return Json(country.States.OrderBy(d => d.Name));
         }
 
-        public JsonResult GetCities(int stateId)
+        public JsonResult? GetCities(int stateId)
         {
             State state = _context.States
                 .Include(s => s.Cities)

@@ -9,7 +9,7 @@ namespace FoodTrucksMenus.Models
 {
     public class AddOrEditBranchViewModel
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Nombre")]
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
@@ -29,7 +29,7 @@ namespace FoodTrucksMenus.Models
         public bool IsMain { get; set; }
         [Display(Name = "Numero de Mesas")]
         public int TablesNumbers { get; set; }
-        public Truck Truck { get; set; }
+        public int TruckId { get; set; }
 
         [Display(Name = "País")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar un país.")]
