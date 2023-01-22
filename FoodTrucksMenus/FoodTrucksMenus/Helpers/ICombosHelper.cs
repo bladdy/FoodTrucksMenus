@@ -9,6 +9,7 @@ namespace FoodTrucksMenus.Helpers
         Task<IEnumerable<SelectListItem>> GetComboCategoriesAsync();
         Task<IEnumerable<SelectListItem>> GetComboBranchesAsync(int truckId);
         Task<IEnumerable<SelectListItem>> GetComboProductsAsync(List<Product> filter, int MenuID);
+        Task<IEnumerable<SelectListItem>> GetComboPLatformsAsync();
         Task<IEnumerable<SelectListItem>> GetComboMenuAsync(int categoryId);
         Task<IEnumerable<SelectListItem>> GetComboCountriesAsync();
         Task<IEnumerable<SelectListItem>> GetComboStatesAsync(int countryId);

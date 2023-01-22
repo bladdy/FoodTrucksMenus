@@ -116,6 +116,24 @@ namespace FoodTrucksMenus.Helpers
             return list;
         }
 
+        public async Task<IEnumerable<SelectListItem>> GetComboPLatformsAsync()
+        {
+            List<SelectListItem> list = await _context.Platforms.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = $"{x.Id}"
+            })
+               .OrderBy(x => x.Text)
+               .ToListAsync();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione una Plataforma...]",
+                Value = "0"
+            });
+            return list;
+        }
+
         public async Task<IEnumerable<SelectListItem>> GetComboProductsAsync(List<Product> filter, int MenuID)
         {
             List<Product> products = await _context.Products.Where(p => p.Category.Id == MenuID).ToListAsync();

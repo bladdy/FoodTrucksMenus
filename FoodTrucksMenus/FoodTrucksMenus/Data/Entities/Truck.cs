@@ -15,6 +15,8 @@ namespace FoodTrucksMenus.Data.Entities
         public ICollection<Branch>? Branch { get; set; }
         public ICollection<Product>? Product { get; set; }
 
+        public ICollection<Menu>? Menu { get; set; }
+
         //Muchos a muchos
         public ICollection<TruckPlatform>? TruckPlatforms { get; set; }
         public ICollection<TruckCategory>? TruckCategories { get; set; }

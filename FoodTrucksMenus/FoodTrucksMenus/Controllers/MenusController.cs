@@ -21,7 +21,7 @@ namespace FoodTrucksMenus.Controllers
         {
             return _context.Menus != null ?
                         View(await _context.Menus.Include(P => P.MenuProducts)
-                        .Include(B => B.Branch).Include(B => B.Category).ToListAsync()) :
+                        .Include(B => B.Category).ToListAsync()) :
                         Problem("Entity set 'DataContext.Menus'  is null.");
         }
         public async Task<IActionResult> Create()
@@ -43,7 +43,7 @@ namespace FoodTrucksMenus.Controllers
                     Menu menu = new()
                     {
                         Name = model.Name,
-                        Branch = await _context.Branches.FindAsync(model.BranchId),
+                        //Branch = await _context.Branches.FindAsync(model.BranchId),
                         Category = await _context.Categories.FindAsync(model.CategoryId),
                         Enable = model.Enable,
 
@@ -116,7 +116,7 @@ namespace FoodTrucksMenus.Controllers
                     Menu menu = new()
                     {
                         Name = model.Name,
-                        Branch = await _context.Branches.FindAsync(model.BranchId),
+                        //Branch = await _context.Branches.FindAsync(model.BranchId),
                         Category = await _context.Categories.FindAsync(model.CategoryId),
                         Enable = model.Enable,
                         Id = model.Id,
@@ -154,7 +154,7 @@ namespace FoodTrucksMenus.Controllers
             Menu menu = await _context.Menus
                 .Include(MP => MP.MenuProducts)
                 .ThenInclude(P => P.Product)
-                .Include(B => B.Branch)
+                //.Include(B => B.Branch)
                 .Include(B => B.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
@@ -166,7 +166,6 @@ namespace FoodTrucksMenus.Controllers
             return View(menu);
         }
 
-        //Prod crear view
         public async Task<IActionResult> AddProduct(int? id)
         {
             if (id == null)
@@ -177,7 +176,7 @@ namespace FoodTrucksMenus.Controllers
             Menu menu = await _context.Menus
                 .Include(MP => MP.MenuProducts)
                 .ThenInclude(P => P.Product)
-                .Include(B => B.Branch)
+                //.Include(B => B.Branch)
                 .Include(B => B.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
 

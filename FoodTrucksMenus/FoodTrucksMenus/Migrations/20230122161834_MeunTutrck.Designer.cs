@@ -4,6 +4,7 @@ using FoodTrucksMenus.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodTrucksMenus.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230122161834_MeunTutrck")]
+    partial class MeunTutrck
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -541,11 +543,9 @@ namespace FoodTrucksMenus.Migrations
 
                     b.HasIndex("PlatformId");
 
-                    b.HasIndex("TruckId", "PlatformId")
-                        .IsUnique()
-                        .HasFilter("[TruckId] IS NOT NULL AND [PlatformId] IS NOT NULL");
+                    b.HasIndex("TruckId");
 
-                    b.ToTable("TruckPlatforms");
+                    b.ToTable("TruckPlatform");
                 });
 
             modelBuilder.Entity("FoodTrucksMenus.Data.Entities.TruckSchedule", b =>

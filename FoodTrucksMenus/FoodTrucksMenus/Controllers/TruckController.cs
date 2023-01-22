@@ -21,11 +21,11 @@ namespace FoodTrucksMenus.Controllers
             return _context.Trucks != null ?
                         View(await _context.Trucks
                 .Include(T => T.Branch)
-                //.ThenInclude(P => P.Menus)
-                //.ThenInclude(c=> c.Category)
+                //.Include(P => P.TruckCategories)
                 .Include(B => B.TruckPlatforms)
                 .ThenInclude(B => B.Platform)
                 .Include(B => B.TruckCategories)
+                .ThenInclude(c=> c.Category)
                 .FirstOrDefaultAsync(m => m.Id == 1)) :
                         Problem("Entity set 'DataContext.Trucks' is null.");
         }
@@ -88,20 +88,79 @@ namespace FoodTrucksMenus.Controllers
             model.Cities = await _combosHelper.GetComboCitiesAsync(model.StateId);
             return View(model);
         }
-
-        public JsonResult? GetStates(int countryId)
+        //ToDo: Agregar plataforma como el agregar producto al menu
+        public async Task<IActionResult> AddPlatforms(int? id)
         {
-            Country country = _context.Countries
-                .Include(c => c.States)
-                .FirstOrDefault(c => c.Id == countryId);
-            if (country == null)
+            if (id == null)
             {
-                return null;
+                return NotFound();
             }
 
-            return Json(country.States.OrderBy(d => d.Name));
-        }
+            Truck truck = await _context.Trucks
+                .Include(MP => MP.TruckPlatforms)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
+            if (truck == null)
+            {
+                return NotFound();
+            }
+            /*List<Platform> filter = truck.TruckPlatforms.Select(pc => new Platform
+            {
+                Id = pc.Platform.Id,
+                Name = pc.Platform.Name
+            }).ToList();*/
+            AddTruckPlatformsViewModel model = new()
+            {
+                TruckId = truck.Id,
+                Platforms = await _combosHelper.GetComboPLatformsAsync(),
+            };
+            
+            
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddPlatforms(AddTruckPlatformsViewModel model)
+        {
+            Truck truck = await _context.Trucks.FirstOrDefaultAsync(m => m.Id == model.TruckId);
+            if (ModelState.IsValid)
+            {
+                TruckPlatform truckPlatform = new()
+                {
+                    Platform = await _context.Platforms.FindAsync(model.PlatformsId),
+                    Truck = truck,
+                };
+                try
+                {
+                    _context.Add(truckPlatform);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(AddPlatforms), new { Id = truck.Id });
+                }
+
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe una plataforma para este Truck con el mismo nombre.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+            }
+            List<Platform> filter = truck.TruckPlatforms.Select(pc => new Platform
+            {
+                Id = pc.Platform.Id,
+                Name = pc.Platform.Name
+            }).ToList();
+            model.Platforms = await _combosHelper.GetComboPLatformsAsync();
+            return View(model);
+        }
         public JsonResult? GetCities(int stateId)
         {
             State state = _context.States
@@ -113,6 +172,18 @@ namespace FoodTrucksMenus.Controllers
             }
 
             return Json(state.Cities.OrderBy(c => c.Name));
+        }
+        public JsonResult? GetStates(int countryId)
+        {
+            Country country = _context.Countries
+                .Include(c => c.States)
+                .FirstOrDefault(c => c.Id == countryId);
+            if (country == null)
+            {
+                return null;
+            }
+
+            return Json(country.States.OrderBy(d => d.Name));
         }
     }
 }
