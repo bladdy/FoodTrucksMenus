@@ -4,6 +4,7 @@ using FoodTrucksMenus.Helpers;
 using FoodTrucksMenus.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace FoodTrucksMenus.Controllers
 {
@@ -172,6 +173,20 @@ namespace FoodTrucksMenus.Controllers
             }
 
             return Json(state.Cities.OrderBy(c => c.Name));
+        }
+        public JsonResult DeletePlatform(int PlataformsId)
+        {
+            bool result = false;
+            TruckPlatform truckPlatform = _context.TruckPlatforms.FirstOrDefault(m => m.Id == PlataformsId);
+            if (truckPlatform != null)
+            {
+                
+                _context.Remove(truckPlatform);
+                _context.SaveChangesAsync();
+                result = true;
+            }
+
+            return Json(result);
         }
         public JsonResult? GetStates(int countryId)
         {
