@@ -22,7 +22,8 @@ namespace FoodTrucksMenus.Controllers
             return _context.Trucks != null ?
                         View(await _context.Trucks
                 .Include(T => T.Branch)
-                //.Include(P => P.TruckCategories)
+                .Include(M => M.Menu)
+                .ThenInclude(MP => MP.MenuProducts)
                 .Include(B => B.TruckPlatforms)
                 .ThenInclude(B => B.Platform)
                 .Include(B => B.TruckCategories)

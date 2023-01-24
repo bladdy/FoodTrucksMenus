@@ -11,25 +11,29 @@ namespace FoodTrucksMenus.Controllers
     {
         private readonly DataContext _context;
         private readonly ICombosHelper _combosHelper;
-        //ToDo: agregar metodo que quita el producto del menu
+        //ToDo: agregar que filtre el food truck por el Usuario
         public MenusController(DataContext context, ICombosHelper combosHelper)
         {
             _context = context;
             _combosHelper = combosHelper;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
+            if (id == 0)
+                id = 1;
             return _context.Menus != null ?
                         View(await _context.Menus.Include(P => P.MenuProducts)
-                        .Include(B => B.Category).ToListAsync()) :
+                        .Include(B => B.Category).Where(M => M.Truck.Id == id).ToListAsync()) :
                         Problem("Entity set 'DataContext.Menus'  is null.");
         }
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(int truckId)
         {
+            if (truckId == 0)
+                truckId = 1;
             AddOrEditMenu model = new()
             {
                 Categories = await _combosHelper.GetComboCategoriesAsync(),
-                Branches = await _combosHelper.GetComboBranchesAsync(1)//Se obotendra el listado enviando el truck id
+                TruckId = truckId//Se obotendra el listado enviando el truck id
             };
             return View(model);
         }
@@ -43,9 +47,9 @@ namespace FoodTrucksMenus.Controllers
                     Menu menu = new()
                     {
                         Name = model.Name,
-                        //Branch = await _context.Branches.FindAsync(model.BranchId),
                         Category = await _context.Categories.FindAsync(model.CategoryId),
                         Enable = model.Enable,
+                        Truck = await _context.Trucks.FindAsync(model.TruckId)
 
                     };
                     _context.Add(menu);
@@ -71,7 +75,7 @@ namespace FoodTrucksMenus.Controllers
                 }
             }
             model.Categories = await _combosHelper.GetComboCategoriesAsync();
-            model.Branches = await _combosHelper.GetComboBranchesAsync(1);//Se obotendra el listado enviando el truck id
+            model.TruckId = model.TruckId;//Se obotendra el listado enviando el truck id
             return View(model);
         }
 
@@ -92,7 +96,7 @@ namespace FoodTrucksMenus.Controllers
             AddOrEditMenu model = new()
             {
                 Name = menu.Name,
-                Branches = await _combosHelper.GetComboBranchesAsync(1),
+                TruckId = 1,//menu.Truck.Id,
                 Categories = await _combosHelper.GetComboCategoriesAsync(),
                 Enable = (bool)menu.Enable,
                 Id = menu.Id,
@@ -228,6 +232,34 @@ namespace FoodTrucksMenus.Controllers
             }).ToList();
             model.Products = await _combosHelper.GetComboProductsAsync(filter, menu.Category.Id);
             return View(model);
+        }
+        public JsonResult DeleteMenu(int MenuId)
+        {
+            bool result = false;
+            Menu menu = _context.Menus.FirstOrDefault(m => m.Id == MenuId);
+            if (menu != null)
+            {
+
+                _context.Remove(menu);
+                _context.SaveChangesAsync();
+                result = true;
+            }
+
+            return Json(result);
+        }
+        public JsonResult DeleteProductMenu(int ProductMenuId)
+        {
+            bool result = false;
+            MenuProducts menuProducts = _context.MenuProducts.FirstOrDefault(m => m.Id == ProductMenuId);
+            if (menuProducts != null)
+            {
+
+                _context.Remove(menuProducts);
+                _context.SaveChangesAsync();
+                result = true;
+            }
+
+            return Json(result);
         }
 
     }
