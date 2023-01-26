@@ -3,15 +3,18 @@
 @{
     ViewData["Title"] = Model.Nametruck;
 }
+
+
 <h3>Mis Sucursales</h3>
-<div class="row">
+<div class="row" style="flex-direction:row;">
 
     @foreach (var item in Model.Branch)
     {
-        <div class="col-auto" style="margin-bottom:20px;">
+        <!--
+            <a class="nav-link text-dark" asp-controller="Branch" asp-action="Details" asp-route-id="@item.Id">-->
+        <div class="col-auto" style="margin-bottom:20px;" id="branch" onclick="DetailsBranch(@item.Id)">
             <div class="card" style="width: 260px; height:100px">
                 <div class="card-body">
-
                     <div class="d-flex no-block">
                         <div class="m-r-20 align-self-center">
                             <span class="lstick m-r-20"></span>
@@ -25,6 +28,7 @@
                 </div>
             </div>
         </div>
+        <!--</a>-->
     }
     @if (Model.Branch.Count() < 3)
     {
@@ -89,8 +93,7 @@
         <div class="col-auto" style="margin-bottom:20px;">
             <div class="card" style="width: 260px; height:100px">
                 <div class="card-body">
-                    <a class="nav-link text-dark" asp-controller="Menus" asp-action="Details" asp-route-id="@item.Id"
-                   >
+                    <a class="nav-link text-dark" asp-controller="Menus" asp-action="Details" asp-route-id="@item.Id">
 
                         <div class="d-flex no-block mb-3 mt-0">
                             <div class="align-self-center" style="margin-left:10px">
@@ -145,16 +148,21 @@
     </div>
 </div>
 <input type="hidden" id="hiddenPlatformId" />
-<!-- Modal Plataformas Fin-->
+<!-- Modal Plataformas Fin DetailsBranch-->
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script type="text/javascript">
+        var DetailsBranch = function (Id) {
+           let firstName = "John";
+           let userName = "Smith";
+           location.href = '@Url.Action("Details", "Branch")/' + Id ;
+        };
         var ConfirmDelete = function (Id) {
             $("#hiddenPlatformId").val(Id);
             $("#myModal").modal('show');
-        }
+        };
         var DeletePlatform = function () {
             $("#loaderDiv").show();
             var Id = $("#hiddenPlatformId").val();
@@ -171,7 +179,7 @@
                     $("#myModal").modal("hide");
                 }
             })
-        }
+        };
         var CancelDelete = function (PlatformsId) {
             $("#myModal").modal("hide");
 
