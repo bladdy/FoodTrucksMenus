@@ -25,7 +25,8 @@ namespace FoodTrucksMenus.Controllers
                 .Include(M => M.Menus)
                 .ThenInclude(MP => MP.MenuProducts)
                 .Include(B => B.Tables)
-                .ThenInclude(O => O.Orders)
+                .Include(O => O.Orders)
+                .ThenInclude(O => O.OrderDetails)
                 .Include(B => B.Truck)
                 .FirstOrDefaultAsync(B => B.Id == id);
             

@@ -1,5 +1,6 @@
 ﻿using FoodTrucksMenus.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
+using static NuGet.Packaging.PackagingConstants;
 
 namespace FoodTrucksMenus.Data.Entities
 {
@@ -13,6 +14,8 @@ namespace FoodTrucksMenus.Data.Entities
         public float CantProduct => OrderDetails == null ? 0 : OrderDetails.Sum(od => od.Quantity);
         [Column(TypeName = "money")]
         public decimal TotalOrder => OrderDetails == null ? 0 : OrderDetails.Sum(od => od.Total);
+
+       
         public StatusType StatusType { get; set; }
         public DateTime OrderDatetime { get; set; }
     }

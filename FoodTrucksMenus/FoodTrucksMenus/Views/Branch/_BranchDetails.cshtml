@@ -1,24 +1,26 @@
 ﻿@model FoodTrucksMenus.Data.Entities.Branch
 <hr />
-<dl class="row">
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.NameBranch)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.NameBranch)
-    </dd>
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.CantTable)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.CantTable)
-    </dd>
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.GetOccupied)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.GetOccupied)
-    </dd>
-
-
-</dl>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <dl>
+                <dt class="col-sm-12">
+                    @Html.DisplayNameFor(model => model.CantTable)
+                </dt>
+                <dd class="col-sm-12">
+                    @Html.DisplayFor(model => model.CantTable)
+                </dd>
+            </dl>
+        </div>
+        <div class="col">
+            <dl>
+                <dt class="col-sm-12">
+                    @Html.DisplayNameFor(model => model.GetOccupied)
+                </dt>
+                <dd class="col-sm-12">
+                    @Html.DisplayFor(model => model.GetOccupied)
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>

@@ -6,24 +6,36 @@
 <div class="container mt-2">
     <h1>Sucursal @Model.NameBranch</h1>
 
-    <div>
+    <div class="col-md-12">
+
         <partial name="_BranchDetails" />
     </div>
-    <div>
-        <a asp-action="AddTables" asp-route-id="@Model?.Id" class="btn btn-outline-secondary">Adicionar Mesas</a>
-        <a asp-action="Index" asp-controller="Truck" class="btn btn-outline-secondary">Regresar</a>
-    </div>
-</div>
+    @if (false)
+    {
+        <div>
+            <a asp-action="AddTables" asp-route-id="@Model?.Id" class="btn btn-outline-secondary">Adicionar Mesas</a>
+            <a asp-action="Index" asp-controller="Truck" class="btn btn-outline-secondary">Regresar</a>
+        </div>
+    }
+</div> 
 <hr />
 <div class="row mt-2" style="flex-direction:row;">
-<h3>Mis Mesas</h3>
+    <h3>Mis Mesas</h3>
 
     @foreach (var item in Model.Tables)
     {
+        var details = @item.Orders;
         var style = (item.Occupied == true) ? "p-3 mb-2 bg-secondary text-white" : "";
         <div class="col-auto" style="margin-bottom:20px;" id="branch" onclick="DetailsBranch(@item.Id)">
             <div class="card @style" style="width: 260px; height:100px">
                 <div class="card-body">
+                    @if (item.Occupied == true)
+                    {
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                           !
+                            <span class="visually-hidden">unread messages</span>
+                        </span>
+                    }
                     <div class="d-flex no-block">
                         <div class="m-r-20 align-self-center">
                             <span class="lstick m-r-20"></span>
