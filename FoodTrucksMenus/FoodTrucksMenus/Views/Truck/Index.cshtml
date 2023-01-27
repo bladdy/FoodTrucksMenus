@@ -10,8 +10,6 @@
 
     @foreach (var item in Model.Branch)
     {
-        <!--
-            <a class="nav-link text-dark" asp-controller="Branch" asp-action="Details" asp-route-id="@item.Id">-->
         <div class="col-auto" style="margin-bottom:20px;" id="branch" onclick="DetailsBranch(@item.Id)">
             <div class="card" style="width: 260px; height:100px">
                 <div class="card-body">
@@ -28,7 +26,6 @@
                 </div>
             </div>
         </div>
-        <!--</a>-->
     }
     @if (Model.Branch.Count() < 3)
     {
@@ -93,8 +90,7 @@
         <div class="col-auto" style="margin-bottom:20px;">
             <div class="card" style="width: 260px; height:100px">
                 <div class="card-body">
-                    <a class="nav-link text-dark" asp-controller="Menus" asp-action="Details" asp-route-id="@item.Id">
-
+                    <a class="nav-link text-dark" asp-controller="Menus" asp-action="Details" asp-route-id="@item.Id" style="margin-top:-10px;">
                         <div class="d-flex no-block mb-3 mt-0">
                             <div class="align-self-center" style="margin-left:10px">
                                 <h6 class="text-muted m-t-10 m-b-0">@item.Name</h6>

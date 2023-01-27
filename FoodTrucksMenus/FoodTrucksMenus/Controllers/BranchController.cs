@@ -24,9 +24,11 @@ namespace FoodTrucksMenus.Controllers
             Branch branch = await _context.Branches
                 .Include(M => M.Menus)
                 .ThenInclude(MP => MP.MenuProducts)
-                //.Include(B => B.Branch)
+                .Include(B => B.Tables)
+                .ThenInclude(O => O.Orders)
                 .Include(B => B.Truck)
                 .FirstOrDefaultAsync(B => B.Id == id);
+            
 
             if (branch == null)
             {

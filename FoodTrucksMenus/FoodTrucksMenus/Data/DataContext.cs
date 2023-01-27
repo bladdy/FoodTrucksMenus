@@ -15,6 +15,7 @@ namespace FoodTrucksMenus.Data
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Platform> Platforms { get; set; }
         public DbSet<Truck> Trucks { get; set; }
+        public DbSet<Table> Tables { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<TruckPlatform> TruckPlatforms { get; set; }
         
