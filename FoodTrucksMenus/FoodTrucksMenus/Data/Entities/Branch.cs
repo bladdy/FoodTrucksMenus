@@ -21,6 +21,7 @@ namespace FoodTrucksMenus.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string? Address { get; set; }
         public bool IsMain { get; set; }
+        [Display(Name = "N° de Mesas")]
         public int TablesNumbers { get; set; }
         public Truck Truck { get; set; }
 
