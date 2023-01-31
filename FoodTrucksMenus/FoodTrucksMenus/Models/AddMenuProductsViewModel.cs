@@ -6,6 +6,10 @@ namespace FoodTrucksMenus.Models
 {
     public class AddMenuProductsViewModel
     {
+        [Display(Name = "N° Comensales")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una Producto.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public int GuestNumber { get; set; }
         public int MenuId { get; set; }
         [Display(Name = "Producto")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una Producto.")]

@@ -117,8 +117,6 @@ namespace FoodTrucksMenus.Controllers
                 TruckId = truck.Id,
                 Platforms = await _combosHelper.GetComboPLatformsAsync(),
             };
-            
-            
             return View(model);
         }
         [HttpPost]

@@ -29,8 +29,6 @@ namespace FoodTrucksMenus.Controllers
                 .ThenInclude(O => O.OrderDetails)
                 .Include(B => B.Truck)
                 .FirstOrDefaultAsync(B => B.Id == id);
-            
-
             if (branch == null)
             {
                 return NotFound();
