@@ -15,8 +15,8 @@ namespace FoodTrucksMenus.Data.Entities
         [Column(TypeName = "money")]
         public decimal TotalOrder => OrderDetails == null ? 0 : OrderDetails.Sum(od => od.Total);
 
-       
         public StatusType StatusType { get; set; }
         public DateTime OrderDatetime { get; set; }
+        public PaymentMethod PaymentMethod { get; set; }
     }
 }

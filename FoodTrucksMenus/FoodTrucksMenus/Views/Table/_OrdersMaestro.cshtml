@@ -1,0 +1,50 @@
+﻿@model FoodTrucksMenus.Data.Entities.Table
+
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <dl>
+                <dt class="col-sm-10">
+                    @Html.DisplayNameFor(model => model.Orders.FirstOrDefault(o=>o.StatusType == FoodTrucksMenus.Enums.StatusType.Open).ClienteName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Orders.FirstOrDefault(o=>o.StatusType == FoodTrucksMenus.Enums.StatusType.Open).ClienteName)
+                </dd>
+                <dt class="col-sm-10">
+                    @Html.DisplayNameFor(model => model.Orders.FirstOrDefault(o=>o.StatusType == FoodTrucksMenus.Enums.StatusType.Open).StatusType)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Orders.FirstOrDefault(o=>o.StatusType == FoodTrucksMenus.Enums.StatusType.Open).StatusType)
+                </dd>
+            </dl>
+        </div>
+        <div class="col">
+            <dl>
+                <dt class="col-sm-10">
+                    @Html.DisplayNameFor(model => model.Orders.FirstOrDefault(o=>o.StatusType == FoodTrucksMenus.Enums.StatusType.Open).CantProduct)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Orders.FirstOrDefault(o=>o.StatusType == FoodTrucksMenus.Enums.StatusType.Open).CantProduct)
+                </dd>
+                <dt class="col-sm-10">
+                    @Html.DisplayNameFor(model => model.Orders.FirstOrDefault(o=>o.StatusType == FoodTrucksMenus.Enums.StatusType.Open).TotalOrder)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Orders.FirstOrDefault(o=>o.StatusType == FoodTrucksMenus.Enums.StatusType.Open).TotalOrder)
+                </dd>
+            </dl>
+        </div>
+        <div class="col">
+            <dl>
+                <dt class="col-sm-10">
+                    @Html.DisplayNameFor(model => model.Orders.FirstOrDefault(o=>o.StatusType == FoodTrucksMenus.Enums.StatusType.Open).PaymentMethod)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Orders.FirstOrDefault(o=>o.StatusType == FoodTrucksMenus.Enums.StatusType.Open).PaymentMethod)
+                </dd>
+               
+            </dl>
+        </div>
+    </div>
+</div>

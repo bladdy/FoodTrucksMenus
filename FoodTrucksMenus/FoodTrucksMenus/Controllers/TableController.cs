@@ -26,7 +26,7 @@ namespace FoodTrucksMenus.Controllers
             {
                 return NotFound();
             }
-              
+            //Order table = await _context.Orders.
             Table table = await _context.Tables
                 .Include(o => o.Orders)
                 .ThenInclude(od => od.OrderDetails)
