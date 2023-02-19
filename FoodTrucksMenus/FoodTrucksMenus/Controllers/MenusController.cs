@@ -225,7 +225,7 @@ namespace FoodTrucksMenus.Controllers
                     ModelState.AddModelError(string.Empty, exception.Message);
                 }
             }
-            List<Product> filter = menu.MenuProducts.Select(pc => new Product
+            List<Product>? filter = menu.MenuProducts.Select(pc => new Product
             {
                 Id = pc.Product.Id,
                 NameProd = pc.Product.NameProd
