@@ -24,11 +24,12 @@ namespace FoodTrucksMenus.Controllers
                 .Include(T => T.Branch)
                 .Include(M => M.Menu)
                 .ThenInclude(MP => MP.MenuProducts)
+                .Include(P => P.Product)
+                .ThenInclude(CP => CP.Category)
                 .Include(B => B.TruckPlatforms)
                 .ThenInclude(B => B.Platform)
                 .Include(B => B.TruckCategories)
                 .ThenInclude(c=> c.Category)
-                //.Include(T => T.t)
                 .FirstOrDefaultAsync(m => m.Id == 1)) :
                         Problem("Entity set 'DataContext.Trucks' is null.");
         }

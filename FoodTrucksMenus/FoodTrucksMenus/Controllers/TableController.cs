@@ -39,7 +39,7 @@ namespace FoodTrucksMenus.Controllers
 
             return View(table);
         }
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             AddTableViewModel table = new()
             {

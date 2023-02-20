@@ -17,13 +17,15 @@ namespace FoodTrucksMenus.Controllers
             _context = context;
             _combosHelper = combosHelper;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
+            //ToDo:Poner a que hale los productos por el Truck del usuario
             return View(await _context.Products
                 .Include(pi => pi.ProductImages)
                 .Include(pc => pc.Category)
                 .Include(p => p.MenuProducts)
                 .ThenInclude(p => p.Menu)
+                .Where(p => p.Truck.Id == 1)
                 .ToListAsync());
         }
         public async Task<IActionResult> Details(int? id)
