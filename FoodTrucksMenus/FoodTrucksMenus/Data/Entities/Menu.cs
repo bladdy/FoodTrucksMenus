@@ -15,7 +15,7 @@ namespace FoodTrucksMenus.Data.Entities
 
         [Display(Name = "# de Productos")]
         public int CantProduct => MenuProducts == null ? 0 : MenuProducts.Count(p=>p.Menu.Id == Id);
-        public Branch? Branch { get; set; }
+        public Truck? Truck { get; set; }
         [Display(Name = "Disponible")]
         public bool? Enable { get; set; }
     }

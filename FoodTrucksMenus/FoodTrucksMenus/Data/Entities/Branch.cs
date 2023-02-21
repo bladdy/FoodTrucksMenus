@@ -21,9 +21,16 @@ namespace FoodTrucksMenus.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string? Address { get; set; }
         public bool IsMain { get; set; }
+        [Display(Name = "N° de Mesas")]
         public int TablesNumbers { get; set; }
         public Truck Truck { get; set; }
-        public int? GetOccupied() => Tables?.Count(t => t.GetOccupied() == true);
+
+
+        [Display(Name = "Mesas Ocupadas")]
+        //public int? GetOccupied => Tables == null ? 0 : Tables.Count(od => od.Occupied == true && od.Branch.Id == Id);
+        public int? GetOccupied => Tables?.Count(t => t.Occupied == true && t.Branch.Id == Id);
+        [Display(Name = "Cantidad de Mesas")]
+        public int? CantTable => Tables?.Count(od => od.Branch.Id == Id);
         //1 a muchos
         public ICollection<Menu>? Menus { get; set; }
         public ICollection<Order>? Orders { get; set; }

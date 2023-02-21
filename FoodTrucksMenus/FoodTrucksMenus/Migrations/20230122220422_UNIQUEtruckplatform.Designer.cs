@@ -4,6 +4,7 @@ using FoodTrucksMenus.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodTrucksMenus.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230122220422_UNIQUEtruckplatform")]
+    partial class UNIQUEtruckplatform
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,9 +243,6 @@ namespace FoodTrucksMenus.Migrations
                     b.Property<DateTime>("OrderDatetime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PaymentMethod")
-                        .HasColumnType("int");
-
                     b.Property<int>("StatusType")
                         .HasColumnType("int");
 
@@ -271,9 +270,6 @@ namespace FoodTrucksMenus.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("Delivered")
-                        .HasColumnType("bit");
 
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
@@ -474,7 +470,7 @@ namespace FoodTrucksMenus.Migrations
 
                     b.HasIndex("TruckId");
 
-                    b.ToTable("Tables");
+                    b.ToTable("Table");
                 });
 
             modelBuilder.Entity("FoodTrucksMenus.Data.Entities.Truck", b =>
@@ -729,15 +725,13 @@ namespace FoodTrucksMenus.Migrations
 
             modelBuilder.Entity("FoodTrucksMenus.Data.Entities.OrderDetail", b =>
                 {
-                    b.HasOne("FoodTrucksMenus.Data.Entities.Order", "Order")
+                    b.HasOne("FoodTrucksMenus.Data.Entities.Order", null)
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderId");
 
                     b.HasOne("FoodTrucksMenus.Data.Entities.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId");
-
-                    b.Navigation("Order");
 
                     b.Navigation("Product");
                 });
@@ -783,15 +777,13 @@ namespace FoodTrucksMenus.Migrations
 
             modelBuilder.Entity("FoodTrucksMenus.Data.Entities.Table", b =>
                 {
-                    b.HasOne("FoodTrucksMenus.Data.Entities.Branch", "Branch")
+                    b.HasOne("FoodTrucksMenus.Data.Entities.Branch", null)
                         .WithMany("Tables")
                         .HasForeignKey("BranchId");
 
                     b.HasOne("FoodTrucksMenus.Data.Entities.Truck", "Truck")
                         .WithMany()
                         .HasForeignKey("TruckId");
-
-                    b.Navigation("Branch");
 
                     b.Navigation("Truck");
                 });
