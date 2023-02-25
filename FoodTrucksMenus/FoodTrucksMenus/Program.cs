@@ -10,10 +10,23 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DataContext>
     (o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+builder.Services.AddTransient<SeedDB>();
 builder.Services.AddScoped<ICombosHelper, CombosHelper>();
-var app = builder.Build();
 
+
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+var app = builder.Build();
+SeedData();
+void SeedData()
+{
+
+    IServiceScopeFactory? scopeFactory = app.Services.GetService<IServiceScopeFactory>();
+    using (IServiceScope? scope = scopeFactory.CreateScope())
+    {
+        SeedDB? service = scope.ServiceProvider.GetService<SeedDB>();
+        service.SeedAsync().Wait();
+    }
+}
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
