@@ -6,6 +6,7 @@
         User,
         Client,
         Waiter,
+        kitchen,
         Cashier
     }
 }

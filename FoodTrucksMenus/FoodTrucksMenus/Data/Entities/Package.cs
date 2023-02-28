@@ -13,8 +13,10 @@ namespace FoodTrucksMenus.Data.Entities
         public int BranchesNumber { get; set; } //minimo 1 , 2 , 4 , 8 sucursal
         public int MenusNumber { get; set; } // minimo 1, 6, 9 , 12 por sucursal
         public int TablesNumber { get; set; } // minimo 1, 6  , 9 , 12 por sucursal
+        public int Product { get; set; } // minimo 15, 20  , 30 , 45 por Trucks
         public List<string> Detallis { get; set; }
         [Column(TypeName = "money")]
         public decimal PurchasePrice { get; set; }
+        //public ICollection<PackageUsers>? PackageUsers { get; set; }
     }
 }

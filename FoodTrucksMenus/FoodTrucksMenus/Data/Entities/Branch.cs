@@ -20,6 +20,7 @@ namespace FoodTrucksMenus.Data.Entities
         [MaxLength(200, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string? Address { get; set; }
+        [Display(Name = "Principal")]
         public bool IsMain { get; set; }
         [Display(Name = "N° de Mesas")]
         public int TablesNumbers { get; set; }
@@ -37,5 +38,8 @@ namespace FoodTrucksMenus.Data.Entities
         public ICollection<Table>? Tables { get; set; }
         [Display(Name = "Ciudad")]
         public City City { get; set; }
+        //ToDo: agregar relacion muchos a muchos
+
+        //public ICollection<MenuBranch>? MenuBranchs { get; set; }
     }
 }

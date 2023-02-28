@@ -21,7 +21,7 @@ namespace FoodTrucksMenus.Models
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una Sucursal.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int TruckId { get; set; }
-
+        [Display(Name = "Disponible")]
         public bool Enable { get; set; }
     }
 }

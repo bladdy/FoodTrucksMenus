@@ -12,11 +12,16 @@ namespace FoodTrucksMenus.Data.Entities
         public string? Name { get; set; }
         public Category? Category { get; set; }
         public ICollection<MenuProducts>? MenuProducts { get; set; }
+        //public ICollection<MenuBranch>? MenuBranchs { get; set; }
 
         [Display(Name = "# de Productos")]
         public int CantProduct => MenuProducts == null ? 0 : MenuProducts.Count(p=>p.Menu.Id == Id);
         public Truck? Truck { get; set; }
         [Display(Name = "Disponible")]
         public bool? Enable { get; set; }
+        //ToDo: agregar relacion muchos a muchos
+
+        //public ICollection<MenuBranch>? MenuBranchs { get; set; }
+
     }
 }

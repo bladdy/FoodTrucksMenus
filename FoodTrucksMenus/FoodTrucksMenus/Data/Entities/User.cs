@@ -40,11 +40,18 @@ namespace FoodTrucksMenus.Data.Entities
 
         /*[Display(Name = "Ciudad")]
         public City City { get; set; }
-        */
+        
+        [Display(Name = "Truck")]
+        public Truck Truck { get; set; }
+        [Display(Name = "Branch")]
+        public Branch Branch { get; set; }*/
+        
         [Display(Name = "Usuario")]
         public string FullName => $"{FirstName} {LastName}";
 
         [Display(Name = "Usuario")]
         public string FullNameWithDocument => $"{FirstName} {LastName} - {Document}";
+
+        //public ICollection<PackageUsers>? PackageUsers { get; set; }
     }
 }
